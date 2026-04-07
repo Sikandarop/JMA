@@ -1108,7 +1108,7 @@ function sendWhatsAppOrder() {
   if (!name || !phone) { alert('Please enter your Name and Phone number.'); return; }
   const orderLines = cart.map(i => `  • ${i.qty}× ${i.name} — Rs ${(i.price * i.qty).toLocaleString()}`).join('\n');
   const msg = `⌚ *New Order – TimeCraft Store*\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n📍 Address: ${address || 'N/A'}\n💳 Payment: ${payment}\n\n🛒 *Order:*\n${orderLines}\n\n💰 *Total: Rs ${cartTotal().toLocaleString()}*\n` + (notes ? `📝 Notes: ${notes}` : '');
-  window.open(`https://wa.me/923349696888?text=${encodeURIComponent(msg)}`, '_blank');
+  window.open(`https://wa.me/923372626303?text=${encodeURIComponent(msg)}`, '_blank');
   closeCheckout();
   cart = []; renderCart(); updateBadge();
 }
