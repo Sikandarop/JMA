@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TimeCraft – Smart Watches & Bracelets</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+/* ─── VARIABLES ─────────────────────────────────────────────── */
+:root{
+  --accent:#00d4ff;
+  --accent2:#7b2fff;
+  --gold:#f0c040;
+  --dark:#050810;
+  --dark2:#090e1a;
+  --dark3:#0f1624;
+  --card-bg:rgba(15,22,36,.8);
+  --text:#e8edf8;
+  --muted:#6b7a99;
+  --radius:20px;
+  --font-head:'Orbitron',sans-serif;
+  --font-body:'Inter',sans-serif;
+}
+
+/* ─── RESET & BASE ───────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--dark);color:var(--text);font-family:var(--font-body);overflow-x:hidden;line-height:1.6}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+section{padding:90px 20px}
+
+/* ─── UTILITY ────────────────────────────────────────────────── */
+.container{max-width:1240px;margin:0 auto;padding:0 28px}
+.tag{display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-family:var(--font-head);letter-spacing:2px;font-size:.65rem;padding:5px 16px;border-radius:40px;margin-bottom:14px}
+.section-title{font-family:var(--font-head);font-size:clamp(1.8rem,4vw,3rem);line-height:1.1;color:#fff;margin-bottom:10px}
+.section-title span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.section-sub{color:var(--muted);font-size:.95rem;margin-bottom:52px;max-width:520px;line-height:1.8}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:13px 32px;border-radius:50px;font-family:var(--font-body);font-weight:600;letter-spacing:.5px;font-size:.9rem;cursor:pointer;border:2px solid transparent;transition:all .3s}
+.btn-accent{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+.btn-accent:hover{transform:translateY(-2px);box-shadow:0 10px 40px rgba(0,212,255,.35)}
+.btn-outline{background:transparent;border-color:var(--accent);color:var(--accent)}
+.btn-outline:hover{background:var(--accent);color:#000;transform:translateY(-2px)}
+.btn-gold{background:linear-gradient(135deg,var(--gold),#e0a020);color:#000;font-weight:700}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 40px rgba(240,192,64,.35)}
+.glass{background:var(--card-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(0,212,255,.1)}
+
+/* ─── GRID BG PATTERN ────────────────────────────────────────── */
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,212,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+
+/* ─── NAVBAR ────────────────────────────────────────────────── */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 28px;height:72px;display:flex;align-items:center;justify-content:space-between;transition:background .4s,box-shadow .4s}
+nav.scrolled{background:rgba(5,8,16,.95);backdrop-filter:blur(24px);box-shadow:0 1px 0 rgba(0,212,255,.15),0 4px 40px rgba(0,0,0,.6)}
+.logo{font-family:var(--font-head);font-size:1.5rem;letter-spacing:3px;color:#fff;display:flex;align-items:center;gap:10px}
+.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;color:#fff}
+.logo span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{font-size:.82rem;font-weight:500;letter-spacing:.5px;color:var(--muted);transition:color .3s;text-transform:uppercase}
+.nav-links a:hover{color:var(--accent)}
+.nav-links .btn{padding:9px 22px;font-size:.8rem}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px}
+.hamburger span{display:block;width:26px;height:2px;background:#fff;border-radius:4px;transition:all .3s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;background:rgba(5,8,16,.98);backdrop-filter:blur(24px);padding:28px;z-index:999;border-bottom:1px solid rgba(0,212,255,.1)}
+.mobile-menu a{display:block;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.05);font-weight:500;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);transition:color .3s}
+.mobile-menu a:hover{color:var(--accent)}
+
+/* ─── HERO ──────────────────────────────────────────────────── */
+#hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;padding:100px 28px 60px}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 60% 50%,rgba(123,47,255,.12) 0%,transparent 70%),radial-gradient(ellipse 60% 40% at 20% 80%,rgba(0,212,255,.08) 0%,transparent 60%),var(--dark);z-index:0}
+.hero-glow{position:absolute;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,.06) 0%,transparent 70%);top:50%;right:-200px;transform:translateY(-50%);z-index:1;animation:glow 6s ease-in-out infinite}
+@keyframes glow{0%,100%{opacity:.6;transform:translateY(-50%) scale(1)}50%{opacity:1;transform:translateY(-50%) scale(1.05)}}
+.hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:2;max-width:1240px;margin:0 auto;width:100%}
+.hero-content{}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);border-radius:50px;padding:7px 20px;font-size:.8rem;color:var(--accent);margin-bottom:28px;animation:fadeDown .8s ease both;letter-spacing:1px;font-weight:500}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 1.5s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+.hero-title{font-family:var(--font-head);font-size:clamp(2.5rem,5vw,4.2rem);line-height:1.05;color:#fff;margin-bottom:20px;animation:fadeUp .9s ease .1s both}
+.hero-title span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.hero-sub{font-size:1rem;color:var(--muted);margin-bottom:38px;animation:fadeUp .9s ease .25s both;line-height:1.8}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;animation:fadeUp .9s ease .4s both}
+.hero-stats{display:flex;gap:36px;margin-top:52px;animation:fadeUp .9s ease .55s both}
+.stat{text-align:left}
+.stat-num{font-family:var(--font-head);font-size:1.8rem;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.stat-label{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+.hero-visual{position:relative;animation:fadeUp .9s ease .3s both}
+.watch-showcase{position:relative;display:flex;align-items:center;justify-content:center}
+.watch-ring{width:420px;height:420px;border-radius:50%;border:1px solid rgba(0,212,255,.15);position:relative;display:flex;align-items:center;justify-content:center;animation:rotateRing 20s linear infinite}
+@keyframes rotateRing{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.watch-ring::before{content:'';position:absolute;width:380px;height:380px;border-radius:50%;border:1px dashed rgba(0,212,255,.08)}
+.watch-ring-dot{position:absolute;width:8px;height:8px;background:var(--accent);border-radius:50%;top:-4px;left:50%;margin-left:-4px;box-shadow:0 0 12px var(--accent)}
+.watch-main-img{width:260px;height:260px;object-fit:cover;border-radius:50%;border:3px solid rgba(0,212,255,.3);box-shadow:0 0 60px rgba(0,212,255,.2),0 0 120px rgba(123,47,255,.1);animation:none;position:relative;z-index:2}
+.watch-float{position:absolute;background:var(--card-bg);border:1px solid rgba(0,212,255,.2);border-radius:14px;padding:10px 14px;backdrop-filter:blur(12px);font-size:.75rem;animation:floatBadge 3s ease-in-out infinite}
+.watch-float-1{top:20px;right:-10px;animation-delay:0s}
+.watch-float-2{bottom:40px;left:-20px;animation-delay:1.5s}
+@keyframes floatBadge{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.float-icon{font-size:1.1rem;margin-bottom:3px}
+.float-val{font-family:var(--font-head);font-size:.9rem;color:var(--accent)}
+.float-lbl{color:var(--muted);font-size:.7rem}
+
+/* ─── FEATURES STRIP ────────────────────────────────────────── */
+#features-strip{padding:28px 20px;background:var(--dark2);border-top:1px solid rgba(0,212,255,.08);border-bottom:1px solid rgba(0,212,255,.08)}
+.features-strip-inner{display:flex;gap:0;justify-content:center;flex-wrap:wrap}
+.strip-feat{display:flex;align-items:center;gap:12px;padding:14px 36px;border-right:1px solid rgba(255,255,255,.06);flex:1;min-width:180px}
+.strip-feat:last-child{border-right:none}
+.strip-feat i{font-size:1.3rem;color:var(--accent)}
+.strip-feat h4{font-size:.85rem;font-weight:600;margin-bottom:1px}
+.strip-feat p{font-size:.75rem;color:var(--muted)}
+
+/* ─── PRODUCTS / SHOP ────────────────────────────────────────── */
+#shop{background:var(--dark)}
+.shop-filter{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:44px}
+.filter-btn{padding:9px 22px;border-radius:50px;border:1px solid rgba(255,255,255,.1);background:transparent;color:var(--muted);font-family:var(--font-body);font-weight:600;font-size:.8rem;cursor:pointer;transition:all .3s;letter-spacing:.5px;text-transform:uppercase}
+.filter-btn.active,.filter-btn:hover{background:linear-gradient(135deg,var(--accent),var(--accent2));border-color:transparent;color:#fff;box-shadow:0 4px 20px rgba(0,212,255,.25)}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:24px}
+.product-card{border-radius:var(--radius);overflow:hidden;transition:transform .35s,box-shadow .35s;animation:cardIn .5s ease both}
+@keyframes cardIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.product-card:hover{transform:translateY(-10px);box-shadow:0 24px 60px rgba(0,212,255,.12)}
+.product-card.hidden{display:none}
+.product-img{position:relative;height:220px;overflow:hidden;background:var(--dark3)}
+.product-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.product-card:hover .product-img img{transform:scale(1.06)}
+.product-badge{position:absolute;top:12px;left:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:.65rem;padding:4px 12px;border-radius:40px;letter-spacing:1px;font-weight:600;text-transform:uppercase}
+.product-badge.gold{background:linear-gradient(135deg,var(--gold),#e0a020);color:#000}
+.product-badge.red{background:linear-gradient(135deg,#ff3c6e,#c0002a);color:#fff}
+.product-body{padding:20px;background:var(--dark3)}
+.product-brand{font-size:.72rem;color:var(--accent);text-transform:uppercase;letter-spacing:2px;margin-bottom:5px;font-weight:600}
+.product-body h3{font-family:var(--font-head);font-size:1.1rem;letter-spacing:.5px;margin-bottom:6px;line-height:1.2}
+.product-body p{font-size:.8rem;color:var(--muted);margin-bottom:16px;line-height:1.6}
+.product-foot{display:flex;align-items:center;justify-content:space-between}
+.price{font-family:var(--font-head);font-size:1.3rem;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.price-old{font-size:.8rem;color:var(--muted);text-decoration:line-through;margin-left:6px;-webkit-text-fill-color:var(--muted)}
+.add-btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:9px 18px;border-radius:50px;font-family:var(--font-body);font-weight:600;font-size:.8rem;cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:6px}
+.add-btn:hover{box-shadow:0 4px 20px rgba(0,212,255,.4);transform:scale(1.04)}
+.add-btn.added{background:linear-gradient(135deg,var(--gold),#e0a020);color:#000}
+
+/* ─── BRAND STRIP ────────────────────────────────────────────── */
+#brands{background:var(--dark2);padding:50px 20px}
+.brands-inner{display:flex;align-items:center;justify-content:center;gap:60px;flex-wrap:wrap}
+.brand-logo{font-family:var(--font-head);font-size:1.1rem;color:var(--muted);letter-spacing:2px;transition:color .3s;opacity:.5}
+.brand-logo:hover{color:var(--accent);opacity:1}
+
+/* ─── GALLERY ────────────────────────────────────────────────── */
+#gallery{background:var(--dark)}
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:220px 220px;gap:16px}
+.gallery-item{border-radius:var(--radius);overflow:hidden;position:relative;cursor:pointer}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.gallery-item:hover img{transform:scale(1.08)}
+.gallery-item::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7),transparent);opacity:0;transition:opacity .3s}
+.gallery-item:hover::after{opacity:1}
+.gallery-item:nth-child(1){grid-column:span 2}
+.gallery-item:nth-child(4){grid-column:span 2}
+.gallery-overlay{position:absolute;bottom:16px;left:16px;z-index:1;font-family:var(--font-head);font-size:1rem;color:#fff;opacity:0;transform:translateY(10px);transition:all .3s;letter-spacing:1px}
+.gallery-item:hover .gallery-overlay{opacity:1;transform:translateY(0)}
+
+/* ─── ABOUT / STORY ──────────────────────────────────────────── */
+#about{background:var(--dark2);position:relative;overflow:hidden}
+#about::before{content:'';position:absolute;left:-150px;top:-150px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,.05) 0%,transparent 70%);pointer-events:none}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+.about-img{position:relative;border-radius:var(--radius);overflow:hidden}
+.about-img img{width:100%;height:440px;object-fit:cover;border-radius:var(--radius);transition:transform .6s}
+.about-img:hover img{transform:scale(1.04)}
+.about-img::after{content:'';position:absolute;inset:0;border-radius:var(--radius);border:1px solid rgba(0,212,255,.2)}
+.about-badge-box{position:absolute;bottom:20px;right:20px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-family:var(--font-head);font-size:1.2rem;padding:14px 18px;border-radius:14px;text-align:center;line-height:1.3;box-shadow:0 8px 30px rgba(0,212,255,.4)}
+.about-features{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px}
+.about-feat{display:flex;align-items:center;gap:10px;font-size:.87rem;color:var(--muted)}
+.about-feat i{color:var(--accent);font-size:.85rem}
+
+/* ─── ORDER / CHECKOUT FORM ──────────────────────────────────── */
+#order{background:var(--dark)}
+.order-wrapper{max-width:720px;margin:0 auto}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.form-group{display:flex;flex-direction:column;gap:8px}
+.form-group.full{grid-column:1/-1}
+.form-group label{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+.form-group input,.form-group textarea,.form-group select{background:rgba(255,255,255,.04);border:1px solid rgba(0,212,255,.15);border-radius:12px;padding:13px 16px;color:var(--text);font-family:var(--font-body);font-size:.92rem;transition:border-color .3s,background .3s;outline:none;width:100%}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--accent);background:rgba(0,212,255,.05)}
+.form-group textarea{resize:vertical;min-height:100px}
+.form-group select option{background:var(--dark3);color:var(--text)}
+.form-submit{margin-top:8px;width:100%}
+.success-msg{display:none;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);border-radius:12px;padding:16px;color:var(--accent);text-align:center;margin-top:16px;font-weight:600}
+
+/* ─── SERVICES ───────────────────────────────────────────────── */
+#services{background:var(--dark2)}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.service-card{border-radius:var(--radius);padding:40px 28px;text-align:center;transition:transform .35s,box-shadow .35s;position:relative;overflow:hidden}
+.service-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,212,255,.05),rgba(123,47,255,.05));opacity:0;transition:opacity .4s}
+.service-card:hover::before{opacity:1}
+.service-card:hover{transform:translateY(-10px);box-shadow:0 24px 60px rgba(0,212,255,.1)}
+.service-icon{width:72px;height:72px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:1.8rem;transition:background .3s,border-color .3s}
+.service-card:hover .service-icon{background:linear-gradient(135deg,var(--accent),var(--accent2));border-color:transparent}
+.service-card h3{font-family:var(--font-head);font-size:1.3rem;margin-bottom:10px;letter-spacing:.5px}
+.service-card p{font-size:.87rem;color:var(--muted);line-height:1.7}
+
+/* ─── REVIEWS ────────────────────────────────────────────────── */
+#reviews{background:var(--dark)}
+.reviews-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:44px;flex-wrap:wrap;gap:20px}
+.rating-big{display:flex;align-items:center;gap:16px}
+.rating-number{font-family:var(--font-head);font-size:4.5rem;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.rating-info .stars{color:var(--gold);font-size:1.1rem;letter-spacing:2px}
+.rating-info p{color:var(--muted);font-size:.82rem;margin-top:4px}
+.reviews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.review-card{border-radius:var(--radius);padding:26px;transition:transform .3s;position:relative}
+.review-card:hover{transform:translateY(-5px)}
+.review-card::before{content:'❝';position:absolute;top:12px;right:18px;font-size:3rem;color:rgba(0,212,255,.1);font-family:Georgia,serif;line-height:1}
+.reviewer{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.reviewer-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:1.1rem;color:#fff;flex-shrink:0}
+.reviewer-name{font-weight:700;font-size:.95rem}
+.reviewer-date{font-size:.72rem;color:var(--muted)}
+.review-stars{color:var(--gold);font-size:.82rem;margin-bottom:10px;letter-spacing:2px}
+.review-card p{font-size:.87rem;color:rgba(232,237,248,.7);line-height:1.75;font-style:italic}
+
+/* ─── CONTACT ────────────────────────────────────────────────── */
+#contact{background:var(--dark2)}
+.contact-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:54px;align-items:start}
+.contact-info-item{display:flex;align-items:flex-start;gap:16px;margin-bottom:28px}
+.contact-icon{width:50px;height:50px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);border-radius:14px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1.05rem;flex-shrink:0;margin-top:2px}
+.contact-info-item h4{font-family:var(--font-head);font-size:1rem;margin-bottom:3px;letter-spacing:.5px}
+.contact-info-item p,.contact-info-item a{color:var(--muted);font-size:.88rem;transition:color .3s}
+.contact-info-item a:hover{color:var(--accent)}
+.hours-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:20px}
+.hours-item{display:flex;justify-content:space-between;padding:10px 14px;border-radius:10px;background:rgba(0,212,255,.04);border:1px solid rgba(0,212,255,.07);font-size:.82rem}
+.hours-item span:last-child{color:var(--accent);font-weight:600}
+.map-embed{border-radius:var(--radius);overflow:hidden;height:260px;border:1px solid rgba(0,212,255,.12);margin-top:24px}
+.map-embed iframe{width:100%;height:100%;border:0;filter:grayscale(80%) invert(1) hue-rotate(200deg) brightness(.7)}
+
+/* ─── CART DRAWER ────────────────────────────────────────────── */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:1999;opacity:0;pointer-events:none;transition:opacity .35s}
+.cart-overlay.open{opacity:1;pointer-events:auto}
+.cart-drawer{position:fixed;top:0;right:0;bottom:0;width:420px;max-width:100vw;background:var(--dark2);border-left:1px solid rgba(0,212,255,.12);z-index:2000;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .38s cubic-bezier(.4,0,.2,1)}
+.cart-drawer.open{transform:translateX(0)}
+.cart-head{display:flex;align-items:center;justify-content:space-between;padding:22px 24px;border-bottom:1px solid rgba(0,212,255,.1)}
+.cart-head h2{font-family:var(--font-head);font-size:1.4rem;letter-spacing:1px}
+.cart-head h2 span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cart-close{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.07);border:none;color:var(--text);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.cart-close:hover{background:rgba(0,212,255,.2)}
+.cart-body{flex:1;overflow-y:auto;padding:20px 24px}
+.cart-body::-webkit-scrollbar{width:4px}
+.cart-body::-webkit-scrollbar-thumb{background:rgba(0,212,255,.2);border-radius:4px}
+.cart-empty{text-align:center;padding:60px 20px;color:var(--muted)}
+.cart-empty i{font-size:3.5rem;color:rgba(255,255,255,.08);display:block;margin-bottom:16px}
+.cart-item{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.05);animation:slideIn .3s ease}
+@keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+.cart-item-img{width:60px;height:60px;border-radius:12px;object-fit:cover;flex-shrink:0;border:1px solid rgba(0,212,255,.15)}
+.cart-item-info{flex:1;min-width:0}
+.cart-item-name{font-family:var(--font-head);font-size:1rem;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cart-item-price{font-size:.82rem;color:var(--accent);font-weight:700}
+.cart-item-controls{display:flex;align-items:center;gap:8px;margin-top:6px}
+.qty-btn{width:28px;height:28px;border-radius:8px;border:1px solid rgba(0,212,255,.2);background:transparent;color:var(--text);font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;line-height:1}
+.qty-btn:hover{background:rgba(0,212,255,.15);border-color:var(--accent)}
+.qty-num{font-family:var(--font-head);font-size:1rem;min-width:20px;text-align:center}
+.cart-item-del{width:30px;height:30px;border-radius:8px;border:none;background:rgba(255,60,110,.1);color:#ff3c6e;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:.8rem;flex-shrink:0}
+.cart-item-del:hover{background:#ff3c6e;color:#fff}
+.cart-foot{border-top:1px solid rgba(0,212,255,.1);padding:20px 24px}
+.cart-row{display:flex;justify-content:space-between;align-items:center;font-size:.88rem;color:var(--muted);margin-bottom:8px}
+.cart-row.total{font-family:var(--font-head);font-size:1.3rem;color:#fff;margin-top:10px;padding-top:10px;border-top:1px solid rgba(0,212,255,.1)}
+.cart-row.total span:last-child{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cart-checkout-btn{width:100%;padding:15px;border-radius:50px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;font-family:var(--font-head);font-size:1rem;letter-spacing:1px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .3s;margin-bottom:10px}
+.cart-checkout-btn:hover{box-shadow:0 8px 30px rgba(0,212,255,.4);transform:translateY(-1px)}
+.cart-clear-btn{width:100%;padding:11px;border-radius:50px;background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,.1);font-family:var(--font-body);font-size:.82rem;cursor:pointer;transition:all .2s;letter-spacing:.5px}
+.cart-clear-btn:hover{border-color:#ff3c6e;color:#ff3c6e}
+
+/* ─── CHECKOUT MODAL ─────────────────────────────────────────── */
+.checkout-modal{position:fixed;inset:0;z-index:3000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s}
+.checkout-modal.open{opacity:1;pointer-events:auto}
+.checkout-modal-bg{position:absolute;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(10px)}
+.checkout-box{position:relative;z-index:1;background:var(--dark3);border:1px solid rgba(0,212,255,.15);border-radius:24px;padding:38px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;animation:modalIn .35s ease}
+@keyframes modalIn{from{opacity:0;transform:scale(.95) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.checkout-box h2{font-family:var(--font-head);font-size:1.8rem;margin-bottom:4px;letter-spacing:1px}
+.checkout-box h2 span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.checkout-box>p{color:var(--muted);font-size:.88rem;margin-bottom:24px}
+.checkout-order-summary{background:rgba(0,212,255,.04);border:1px solid rgba(0,212,255,.1);border-radius:14px;padding:16px;margin-bottom:22px;max-height:160px;overflow-y:auto}
+.co-item{display:flex;justify-content:space-between;font-size:.85rem;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.05);color:var(--muted)}
+.co-item:last-child{border-bottom:none}
+.co-item span:last-child{color:var(--accent);font-weight:700}
+.co-total{display:flex;justify-content:space-between;font-family:var(--font-head);font-size:1.2rem;margin-top:12px;padding-top:12px;border-top:1px solid rgba(0,212,255,.1)}
+.co-total span:last-child{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.checkout-actions{display:flex;gap:12px;margin-top:20px}
+.checkout-actions .btn{flex:1;justify-content:center}
+
+/* ─── FLOATING BUTTONS ───────────────────────────────────────── */
+.floating-btns{position:fixed;bottom:28px;right:24px;display:flex;flex-direction:column;gap:12px;z-index:900}
+.fab{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.4);transition:transform .3s,box-shadow .3s;text-decoration:none;border:none;animation:fabIn .6s ease both}
+@keyframes fabIn{from{opacity:0;transform:scale(0)}to{opacity:1;transform:scale(1)}}
+.fab-cart{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;position:relative;animation-delay:.1s}
+.fab-cart:hover{transform:scale(1.15) translateY(-3px);box-shadow:0 12px 32px rgba(0,212,255,.4)}
+.fab-wa{background:#25D366;color:#fff;animation-delay:.2s}
+.fab-wa:hover{transform:scale(1.15) translateY(-3px);box-shadow:0 12px 32px rgba(37,211,102,.4)}
+.fab-top{background:var(--dark3);border:1px solid rgba(0,212,255,.2);color:var(--accent);opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;animation-delay:.3s}
+.fab-top.visible{opacity:1;pointer-events:auto}
+.fab-top:hover{transform:scale(1.15) translateY(-3px)}
+.cart-badge{position:absolute;top:-4px;right:-4px;background:linear-gradient(135deg,#ff3c6e,#c0002a);color:#fff;width:20px;height:20px;border-radius:50%;font-size:.62rem;font-weight:700;display:none;align-items:center;justify-content:center;border:2px solid var(--dark)}
+.cart-badge.show{display:flex}
+
+/* ─── FOOTER ─────────────────────────────────────────────────── */
+footer{background:#030509;padding:54px 24px 24px;border-top:1px solid rgba(0,212,255,.08)}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;margin-bottom:44px}
+.footer-brand .logo{font-size:1.5rem;margin-bottom:14px}
+.footer-brand p{font-size:.85rem;color:var(--muted);line-height:1.8;max-width:260px}
+.footer-social{display:flex;gap:12px;margin-top:20px}
+.social-btn{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(0,212,255,.1);display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all .3s;font-size:.9rem}
+.social-btn:hover{background:linear-gradient(135deg,var(--accent),var(--accent2));border-color:transparent;color:#fff;transform:translateY(-3px)}
+.footer-col h4{font-family:var(--font-head);font-size:.95rem;margin-bottom:18px;letter-spacing:.5px;color:var(--accent)}
+.footer-col ul li{margin-bottom:10px}
+.footer-col ul li a{color:var(--muted);font-size:.85rem;transition:color .3s}
+.footer-col ul li a:hover{color:var(--accent)}
+.footer-bottom{border-top:1px solid rgba(0,212,255,.07);padding-top:22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-size:.78rem;color:var(--muted)}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────────── */
+@media(max-width:1024px){
+  .hero-inner{grid-template-columns:1fr;text-align:center}
+  .hero-visual{display:none}
+  .hero-stats{justify-content:center}
+  .hero-btns{justify-content:center}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:auto}
+  .gallery-item:nth-child(1),.gallery-item:nth-child(4){grid-column:span 1}
+}
+@media(max-width:768px){
+  section{padding:64px 20px}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .about-grid,.contact-grid{grid-template-columns:1fr}
+  .services-grid{grid-template-columns:1fr}
+  .form-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+  .features-strip-inner{flex-direction:column;gap:0}
+  .strip-feat{border-right:none;border-bottom:1px solid rgba(255,255,255,.05)}
+}
+@media(max-width:480px){
+  .gallery-grid{grid-template-columns:1fr}
+  .gallery-item:nth-child(1),.gallery-item:nth-child(4){grid-column:span 1}
+  .products-grid{grid-template-columns:1fr}
+  .reviews-header{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- ─── NAVBAR ─────────────────────────────────────────────── -->
+<nav id="navbar">
+  <a href="#" class="logo">
+    <div class="logo-icon"><i class="fa fa-clock"></i></div>
+    TIME<span>CRAFT</span>
+  </a>
+  <div class="nav-links">
+    <a href="#shop">Shop</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#contact">Contact</a>
+    <a href="#order" class="btn btn-accent"><i class="fa fa-shopping-bag"></i> Buy Now</a>
+  </div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#shop" onclick="closeMenu()">Shop</a>
+  <a href="#gallery" onclick="closeMenu()">Gallery</a>
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#services" onclick="closeMenu()">Services</a>
+  <a href="#reviews" onclick="closeMenu()">Reviews</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+  <a href="#order" onclick="closeMenu()" style="color:var(--accent)">Buy Now →</a>
+</div>
+
+<!-- ─── HERO ───────────────────────────────────────────────── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge"><i class="fa fa-bolt"></i> New 2025 Collection Available</div>
+      <h1 class="hero-title">Wear the Future <span>on Your Wrist</span></h1>
+      <p class="hero-sub">Premium smart watches and luxury bracelets crafted for those who demand the best. Precision engineering meets timeless elegance.</p>
+      <div class="hero-btns">
+        <a href="#shop" class="btn btn-accent"><i class="fa fa-watch"></i> Shop Collection</a>
+        <a href="#order" class="btn btn-outline"><i class="fa fa-tag"></i> Order Now</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Products</div></div>
+        <div class="stat"><div class="stat-num">4.9⭐</div><div class="stat-label">Rating</div></div>
+        <div class="stat"><div class="stat-num">12K+</div><div class="stat-label">Happy Customers</div></div>
+        <div class="stat"><div class="stat-num">2Yr</div><div class="stat-label">Warranty</div></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="watch-showcase">
+        <div class="watch-ring">
+          <div class="watch-ring-dot"></div>
+          <img class="watch-main-img" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80" alt="Premium Smartwatch">
+        </div>
+        <div class="watch-float watch-float-1 glass">
+          <div class="float-icon">❤️</div>
+          <div class="float-val">98 BPM</div>
+          <div class="float-lbl">Heart Rate</div>
+        </div>
+        <div class="watch-float watch-float-2 glass">
+          <div class="float-icon">🛡️</div>
+          <div class="float-val">2 Year</div>
+          <div class="float-lbl">Warranty</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:2">
+    <div style="width:26px;height:42px;border:2px solid rgba(0,212,255,.3);border-radius:14px;position:relative;margin:0 auto">
+      <div style="position:absolute;top:6px;left:50%;transform:translateX(-50%);width:4px;height:8px;background:var(--accent);border-radius:4px;animation:scrollDot 2s ease infinite"></div>
+    </div>
+  </div>
+</section>
+<style>@keyframes scrollDot{0%{top:6px;opacity:1}100%{top:22px;opacity:0}}</style>
+
+<!-- ─── FEATURES STRIP ─────────────────────────────────────── -->
+<div id="features-strip">
+  <div class="container">
+    <div class="features-strip-inner">
+      <div class="strip-feat"><i class="fa fa-truck"></i><div><h4>Free Delivery</h4><p>On orders over Rs 5,000</p></div></div>
+      <div class="strip-feat"><i class="fa fa-shield-alt"></i><div><h4>2 Year Warranty</h4><p>On all smartwatches</p></div></div>
+      <div class="strip-feat"><i class="fa fa-undo"></i><div><h4>Easy Returns</h4><p>7-day hassle-free return</p></div></div>
+      <div class="strip-feat"><i class="fa fa-lock"></i><div><h4>Secure Payment</h4><p>100% safe checkout</p></div></div>
+      <div class="strip-feat"><i class="fa fa-headset"></i><div><h4>24/7 Support</h4><p>Always here to help</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SHOP ───────────────────────────────────────────────── -->
+<section id="shop">
+  <div class="container">
+    <div class="tag">Our Collection</div>
+    <h2 class="section-title">Premium <span>Watches & Bracelets</span></h2>
+    <p class="section-sub">From cutting-edge smartwatches to handcrafted luxury bracelets — find your perfect wrist companion.</p>
+    <div class="shop-filter">
+      <button class="filter-btn active" data-cat="all">All Products</button>
+      <button class="filter-btn" data-cat="smartwatch">Smart Watches</button>
+      <button class="filter-btn" data-cat="analog">Analog Watches</button>
+      <button class="filter-btn" data-cat="bracelet">Bracelets</button>
+      <button class="filter-btn" data-cat="couple">Couple Sets</button>
+      <button class="filter-btn" data-cat="kids">Kids Watches</button>
+    </div>
+    <div class="products-grid" id="menuGrid">
+
+      <!-- ══ SMART WATCHES ══ -->
+      <div class="product-card glass" data-cat="smartwatch">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80" alt="Ultra Pro X9" loading="lazy"><div class="product-badge">🔥 Best Seller</div></div>
+        <div class="product-body"><div class="product-brand">TimeCraft</div><h3>Ultra Pro X9</h3><p>AMOLED display, heart rate, SpO2, GPS, 7-day battery. IP68 waterproof.</p>
+          <div class="product-foot"><div><span class="price">Rs 8,500</span><span class="price-old">Rs 12,000</span></div><button class="add-btn" onclick="addToCart('Ultra Pro X9',8500,'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="smartwatch">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=600&q=80" alt="FitPulse 7" loading="lazy"><div class="product-badge gold">⭐ Premium</div></div>
+        <div class="product-body"><div class="product-brand">FitPulse</div><h3>FitPulse 7</h3><p>Advanced health tracking, sleep monitor, 100+ sports modes, Bluetooth 5.3.</p>
+          <div class="product-foot"><div><span class="price">Rs 6,200</span><span class="price-old">Rs 9,000</span></div><button class="add-btn" onclick="addToCart('FitPulse 7',6200,'https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="smartwatch">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=600&q=80" alt="NovaSmart Z" loading="lazy"><div class="product-badge red">🔴 New</div></div>
+        <div class="product-body"><div class="product-brand">NovaSmart</div><h3>NovaSmart Z</h3><p>Always-on display, NFC pay, call function, stress monitor, 14-day battery.</p>
+          <div class="product-foot"><div><span class="price">Rs 11,000</span><span class="price-old">Rs 15,500</span></div><button class="add-btn" onclick="addToCart('NovaSmart Z',11000,'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="smartwatch">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&q=80" alt="HaloWatch S3" loading="lazy"><div class="product-badge">💪 Sport</div></div>
+        <div class="product-body"><div class="product-brand">HaloWatch</div><h3>HaloWatch S3</h3><p>Rugged military-grade build, GPS, altimeter, barometer, 21-day battery life.</p>
+          <div class="product-foot"><div><span class="price">Rs 14,500</span><span class="price-old">Rs 19,000</span></div><button class="add-btn" onclick="addToCart('HaloWatch S3',14500,'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="smartwatch">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?w=600&q=80" alt="SlimTech Air" loading="lazy"><div class="product-badge">⚡ Ultra-thin</div></div>
+        <div class="product-body"><div class="product-brand">SlimTech</div><h3>SlimTech Air</h3><p>World's slimmest smart band, OLED, notifications, step tracker, 12-day life.</p>
+          <div class="product-foot"><div><span class="price">Rs 3,800</span><span class="price-old">Rs 5,500</span></div><button class="add-btn" onclick="addToCart('SlimTech Air',3800,'https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="smartwatch">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1617886321168-a7f30ee3c6e9?w=600&q=80" alt="ProFit Elite" loading="lazy"><div class="product-badge gold">🥇 Elite</div></div>
+        <div class="product-body"><div class="product-brand">ProFit</div><h3>ProFit Elite</h3><p>ECG monitoring, blood pressure, 110 sports modes, dual GPS, titanium case.</p>
+          <div class="product-foot"><div><span class="price">Rs 22,000</span><span class="price-old">Rs 30,000</span></div><button class="add-btn" onclick="addToCart('ProFit Elite',22000,'https://images.unsplash.com/photo-1617886321168-a7f30ee3c6e9?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="smartwatch">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1434056886845-dac89ffe9b56?w=600&q=80" alt="VisionBand Pro" loading="lazy"><div class="product-badge red">🔴 Limited</div></div>
+        <div class="product-body"><div class="product-brand">VisionBand</div><h3>VisionBand Pro</h3><p>Camera remote, find phone, weather alerts, SpO2, 8-day battery, slim design.</p>
+          <div class="product-foot"><div><span class="price">Rs 5,400</span><span class="price-old">Rs 7,800</span></div><button class="add-btn" onclick="addToCart('VisionBand Pro',5400,'https://images.unsplash.com/photo-1434056886845-dac89ffe9b56?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="smartwatch">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1542496658-e33a6d0d3d8f?w=600&q=80" alt="ArcWatch GT5" loading="lazy"><div class="product-badge">🏃 Runner</div></div>
+        <div class="product-body"><div class="product-brand">ArcWatch</div><h3>ArcWatch GT5</h3><p>Running coach, VO2 Max, route tracking, heart zone training, 10-day battery.</p>
+          <div class="product-foot"><div><span class="price">Rs 9,800</span><span class="price-old">Rs 13,500</span></div><button class="add-btn" onclick="addToCart('ArcWatch GT5',9800,'https://images.unsplash.com/photo-1542496658-e33a6d0d3d8f?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <!-- ══ ANALOG WATCHES ══ -->
+      <div class="product-card glass" data-cat="analog">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?w=600&q=80" alt="Luxe Chronos" loading="lazy"><div class="product-badge gold">✨ Luxury</div></div>
+        <div class="product-body"><div class="product-brand">Luxe</div><h3>Chronos Classic</h3><p>Swiss movement, sapphire crystal, genuine leather strap, 50m water resistant.</p>
+          <div class="product-foot"><div><span class="price">Rs 18,500</span><span class="price-old">Rs 25,000</span></div><button class="add-btn" onclick="addToCart('Chronos Classic',18500,'https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="analog">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1612817288484-6f916006741a?w=600&q=80" alt="Meridian Gold" loading="lazy"><div class="product-badge gold">🏆 Bestseller</div></div>
+        <div class="product-body"><div class="product-brand">Meridian</div><h3>Meridian Gold Edition</h3><p>18K gold-plated case, automatic movement, exhibition caseback, mesh bracelet.</p>
+          <div class="product-foot"><div><span class="price">Rs 32,000</span><span class="price-old">Rs 45,000</span></div><button class="add-btn" onclick="addToCart('Meridian Gold Edition',32000,'https://images.unsplash.com/photo-1612817288484-6f916006741a?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="analog">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1548171915-e79a6a2e30fe?w=600&q=80" alt="Atlas Steel" loading="lazy"><div class="product-badge">⚙️ Mechanical</div></div>
+        <div class="product-body"><div class="product-brand">Atlas</div><h3>Atlas Steelcraft</h3><p>Skeleton dial, visible movement, stainless steel, Japanese quartz precision.</p>
+          <div class="product-foot"><div><span class="price">Rs 7,200</span><span class="price-old">Rs 10,000</span></div><button class="add-btn" onclick="addToCart('Atlas Steelcraft',7200,'https://images.unsplash.com/photo-1548171915-e79a6a2e30fe?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="analog">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1589571894960-20bbe2828d0a?w=600&q=80" alt="Vega Black" loading="lazy"><div class="product-badge red">⚫ Black Ed.</div></div>
+        <div class="product-body"><div class="product-brand">Vega</div><h3>Vega Black Edition</h3><p>All-black DLC coated case, luminous hands, mineral crystal, 10 ATM.</p>
+          <div class="product-foot"><div><span class="price">Rs 12,800</span><span class="price-old">Rs 17,000</span></div><button class="add-btn" onclick="addToCart('Vega Black Edition',12800,'https://images.unsplash.com/photo-1589571894960-20bbe2828d0a?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="analog">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1619134778706-7015533a6150?w=600&q=80" alt="Solaris Women" loading="lazy"><div class="product-badge">👑 Women</div></div>
+        <div class="product-body"><div class="product-brand">Solaris</div><h3>Solaris Rose Gold</h3><p>Rose gold case, pearl dial, crystal markers, genuine Italian leather strap.</p>
+          <div class="product-foot"><div><span class="price">Rs 9,500</span><span class="price-old">Rs 14,000</span></div><button class="add-btn" onclick="addToCart('Solaris Rose Gold',9500,'https://images.unsplash.com/photo-1619134778706-7015533a6150?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="analog">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1586495777744-4e6232bf2176?w=600&q=80" alt="Titan Diver" loading="lazy"><div class="product-badge">🤿 Diver</div></div>
+        <div class="product-body"><div class="product-brand">Titan</div><h3>Titan Diver Pro</h3><p>300m water resistance, rotating bezel, luminous dial, helium escape valve.</p>
+          <div class="product-foot"><div><span class="price">Rs 15,000</span><span class="price-old">Rs 21,000</span></div><button class="add-btn" onclick="addToCart('Titan Diver Pro',15000,'https://images.unsplash.com/photo-1586495777744-4e6232bf2176?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <!-- ══ BRACELETS ══ -->
+      <div class="product-card glass" data-cat="bracelet">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&q=80" alt="Aurora Gold Bracelet" loading="lazy"><div class="product-badge gold">✨ Gold</div></div>
+        <div class="product-body"><div class="product-brand">Aurora</div><h3>Aurora Gold Cuff</h3><p>18K gold-plated brass cuff with diamond-cut finish, adjustable size, gift box.</p>
+          <div class="product-foot"><div><span class="price">Rs 3,200</span><span class="price-old">Rs 4,800</span></div><button class="add-btn" onclick="addToCart('Aurora Gold Cuff',3200,'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="bracelet">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=600&q=80" alt="Pearl Strand Bracelet" loading="lazy"><div class="product-badge">🤍 Pearl</div></div>
+        <div class="product-body"><div class="product-brand">Lumière</div><h3>Pearl Strand Bracelet</h3><p>Genuine freshwater pearls, sterling silver clasp, silk thread, elegantly boxed.</p>
+          <div class="product-foot"><div><span class="price">Rs 2,800</span><span class="price-old">Rs 4,200</span></div><button class="add-btn" onclick="addToCart('Pearl Strand Bracelet',2800,'https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="bracelet">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1573408301185-9519f94815e2?w=600&q=80" alt="Steel Mesh Band" loading="lazy"><div class="product-badge">⚙️ Steel</div></div>
+        <div class="product-body"><div class="product-brand">Ferro</div><h3>Milano Mesh Band</h3><p>Stainless steel milanese mesh, magnetic clasp, scratch-resistant, unisex design.</p>
+          <div class="product-foot"><div><span class="price">Rs 1,900</span><span class="price-old">Rs 2,800</span></div><button class="add-btn" onclick="addToCart('Milano Mesh Band',1900,'https://images.unsplash.com/photo-1573408301185-9519f94815e2?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="bracelet">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&q=80" alt="Gemstone Bracelet" loading="lazy"><div class="product-badge gold">💎 Gems</div></div>
+        <div class="product-body"><div class="product-brand">Crystal</div><h3>Gemstone Charm Bracelet</h3><p>Natural semi-precious stones, silver wire-wrapped beads, energy healing design.</p>
+          <div class="product-foot"><div><span class="price">Rs 2,100</span><span class="price-old">Rs 3,500</span></div><button class="add-btn" onclick="addToCart('Gemstone Charm Bracelet',2100,'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="bracelet">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&q=80" alt="Leather Wrap" loading="lazy"><div class="product-badge">🌿 Leather</div></div>
+        <div class="product-body"><div class="product-brand">Boho</div><h3>Leather Wrap Bracelet</h3><p>Genuine Italian leather, brass charms, multi-wrap style, adjustable knot closure.</p>
+          <div class="product-foot"><div><span class="price">Rs 1,400</span><span class="price-old">Rs 2,000</span></div><button class="add-btn" onclick="addToCart('Leather Wrap Bracelet',1400,'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="bracelet">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?w=600&q=80" alt="Diamond Tennis" loading="lazy"><div class="product-badge red">💎 Diamond</div></div>
+        <div class="product-body"><div class="product-brand">Celestia</div><h3>Tennis Bracelet</h3><p>CZ diamond-simulated stones, rhodium plated, prong setting, 18cm with extender.</p>
+          <div class="product-foot"><div><span class="price">Rs 4,500</span><span class="price-old">Rs 7,000</span></div><button class="add-btn" onclick="addToCart('Tennis Bracelet',4500,'https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="bracelet">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Beaded Stack" loading="lazy"><div class="product-badge">🪬 Spiritual</div></div>
+        <div class="product-body"><div class="product-brand">Zen</div><h3>Black Lava Bead Stack</h3><p>Natural lava stone beads, diffuser bracelet, elastic band, set of 3, aromatherapy.</p>
+          <div class="product-foot"><div><span class="price">Rs 1,200</span><span class="price-old">Rs 1,800</span></div><button class="add-btn" onclick="addToCart('Black Lava Bead Stack',1200,'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <!-- ══ COUPLE SETS ══ -->
+      <div class="product-card glass" data-cat="couple">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1574158622682-e40e69881006?w=600&q=80" alt="Couple Smart Set" loading="lazy"><div class="product-badge red">❤️ Couple</div></div>
+        <div class="product-body"><div class="product-brand">Amore</div><h3>Couple Smart Set</h3><p>Matching his &amp; hers smartwatches, heart rate sync, notification share, gift pack.</p>
+          <div class="product-foot"><div><span class="price">Rs 12,500</span><span class="price-old">Rs 18,000</span></div><button class="add-btn" onclick="addToCart('Couple Smart Set',12500,'https://images.unsplash.com/photo-1574158622682-e40e69881006?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="couple">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600&q=80" alt="Couple Bracelet Set" loading="lazy"><div class="product-badge red">💕 Pair</div></div>
+        <div class="product-body"><div class="product-brand">Infinity</div><h3>Infinity Bracelet Pair</h3><p>Matching engraved bracelets, stainless steel, infinity symbol, comes in gift box.</p>
+          <div class="product-foot"><div><span class="price">Rs 2,600</span><span class="price-old">Rs 4,000</span></div><button class="add-btn" onclick="addToCart('Infinity Bracelet Pair',2600,'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="couple">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1519995451813-39e29e054914?w=600&q=80" alt="His Hers Watch Set" loading="lazy"><div class="product-badge gold">💍 Luxury Pair</div></div>
+        <div class="product-body"><div class="product-brand">Amore Luxe</div><h3>His &amp; Hers Watch Set</h3><p>Matching quartz watches, rose gold &amp; silver, genuine leather straps, gift box.</p>
+          <div class="product-foot"><div><span class="price">Rs 9,800</span><span class="price-old">Rs 15,000</span></div><button class="add-btn" onclick="addToCart('His & Hers Watch Set',9800,'https://images.unsplash.com/photo-1519995451813-39e29e054914?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <!-- ══ KIDS WATCHES ══ -->
+      <div class="product-card glass" data-cat="kids">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600&q=80" alt="KidTrack" loading="lazy"><div class="product-badge">🧒 Kids GPS</div></div>
+        <div class="product-body"><div class="product-brand">KidTrack</div><h3>KidTrack GPS Watch</h3><p>Real-time GPS tracking, SOS button, two-way calling, IP67 waterproof, parent app.</p>
+          <div class="product-foot"><div><span class="price">Rs 5,800</span><span class="price-old">Rs 8,000</span></div><button class="add-btn" onclick="addToCart('KidTrack GPS Watch',5800,'https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="kids">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1587502536575-6dfba0a6e017?w=600&q=80" alt="DinoWatch Kids" loading="lazy"><div class="product-badge red">🦕 Fun</div></div>
+        <div class="product-body"><div class="product-brand">DinoWatch</div><h3>DinoWatch Fun Edition</h3><p>Colourful dino design, time teacher, alarm, stopwatch, soft silicone strap.</p>
+          <div class="product-foot"><div><span class="price">Rs 1,800</span><span class="price-old">Rs 2,500</span></div><button class="add-btn" onclick="addToCart('DinoWatch Fun Edition',1800,'https://images.unsplash.com/photo-1587502536575-6dfba0a6e017?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="kids">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=600&q=80" alt="StarKid Smart" loading="lazy"><div class="product-badge">⭐ Smart</div></div>
+        <div class="product-body"><div class="product-brand">StarKid</div><h3>StarKid Smart Watch</h3><p>Games, camera, pedometer, alarm, educational apps, 3-day battery, cute design.</p>
+          <div class="product-foot"><div><span class="price">Rs 3,400</span><span class="price-old">Rs 5,000</span></div><button class="add-btn" onclick="addToCart('StarKid Smart Watch',3400,'https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── BRANDS ──────────────────────────────────────────────── -->
+<div id="brands">
+  <div class="container">
+    <p style="text-align:center;font-size:.75rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:28px">Trusted Brands We Carry</p>
+    <div class="brands-inner">
+      <div class="brand-logo">SAMSUNG</div>
+      <div class="brand-logo">HUAWEI</div>
+      <div class="brand-logo">XIAOMI</div>
+      <div class="brand-logo">GARMIN</div>
+      <div class="brand-logo">FITBIT</div>
+      <div class="brand-logo">FOSSIL</div>
+      <div class="brand-logo">CASIO</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── GALLERY ────────────────────────────────────────────── -->
+<section id="gallery">
+  <div class="container">
+    <div class="tag">Visual Story</div>
+    <h2 class="section-title">Crafted for <span>Every Moment</span></h2>
+    <p class="section-sub">Every piece tells a story. Explore our collection through the lens.</p>
+    <div class="gallery-grid">
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=700&q=80" alt="Smartwatch"><div class="gallery-overlay">Smart Watches</div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?w=500&q=80" alt="Analog"><div class="gallery-overlay">Analog Collection</div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500&q=80" alt="Bracelets"><div class="gallery-overlay">Bracelets</div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?w=700&q=80" alt="Luxury"><div class="gallery-overlay">Luxury Line</div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1612817288484-6f916006741a?w=500&q=80" alt="Gold"><div class="gallery-overlay">Gold Edition</div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500&q=80" alt="Couple"><div class="gallery-overlay">Couple Sets</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ──────────────────────────────────────────────── -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img">
+        <img src="https://images.unsplash.com/photo-1548171915-e79a6a2e30fe?w=800&q=80" alt="TimeCraft Store" loading="lazy">
+        <div class="about-badge-box">EST.<br>2018</div>
+      </div>
+      <div>
+        <div class="tag">Our Story</div>
+        <h2 class="section-title">Precision Meets <span>Passion</span></h2>
+        <p style="color:var(--muted);line-height:1.9;margin-bottom:20px">TimeCraft is Pakistan's premier destination for smart watches and luxury bracelets. Founded in 2018, we have built a reputation for offering authentic, high-quality timepieces and accessories at competitive prices.</p>
+        <p style="color:var(--muted);line-height:1.9;margin-bottom:28px">From fitness enthusiasts to fashion lovers, from tech geeks to luxury seekers — we have something for every wrist. Every product we carry is hand-selected for quality, authenticity and style.</p>
+        <div class="about-features">
+          <div class="about-feat"><i class="fa fa-check-circle"></i> 100% Authentic Products</div>
+          <div class="about-feat"><i class="fa fa-check-circle"></i> 2-Year Warranty</div>
+          <div class="about-feat"><i class="fa fa-check-circle"></i> Expert Advice</div>
+          <div class="about-feat"><i class="fa fa-check-circle"></i> Fast Nationwide Delivery</div>
+          <div class="about-feat"><i class="fa fa-check-circle"></i> Easy 7-Day Returns</div>
+          <div class="about-feat"><i class="fa fa-check-circle"></i> Certified Technicians</div>
+        </div>
+        <a href="#shop" class="btn btn-accent" style="margin-top:32px"><i class="fa fa-watch"></i> Explore Collection</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ORDER FORM ─────────────────────────────────────────── -->
+<section id="order">
+  <div class="container">
+    <div class="tag">Place Order</div>
+    <h2 class="section-title" style="text-align:center">Order <span>Online</span></h2>
+    <p class="section-sub" style="text-align:center;margin:0 auto 44px">Fill in your details below and we'll confirm your order via WhatsApp.</p>
+    <div class="order-wrapper">
+      <div class="glass" style="border-radius:var(--radius);padding:42px">
+        <div class="form-grid">
+          <div class="form-group"><label>Full Name</label><input type="text" id="fname" placeholder="e.g. Ahmed Khan" required></div>
+          <div class="form-group"><label>Phone Number</label><input type="tel" id="fphone" placeholder="+92 300 0000000" required></div>
+          <div class="form-group"><label>City</label><input type="text" id="fcity" placeholder="e.g. Karachi, Lahore, Islamabad"></div>
+          <div class="form-group"><label>Delivery Address</label><input type="text" id="faddress" placeholder="Street, Area, City"></div>
+          <div class="form-group full"><label>Product You Want</label><textarea id="fdetails" placeholder="e.g. 1x Ultra Pro X9 Smartwatch, 1x Aurora Gold Cuff..."></textarea></div>
+          <div class="form-group"><label>Payment Method</label>
+            <select id="fpayment">
+              <option value="Cash on Delivery">💵 Cash on Delivery</option>
+              <option value="Bank Transfer">🏦 Bank Transfer</option>
+              <option value="EasyPaisa">📱 EasyPaisa</option>
+              <option value="JazzCash">📱 JazzCash</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Special Notes</label><input type="text" id="fnotes" placeholder="e.g. Black colour, size M..."></div>
+        </div>
+        <button class="btn btn-accent form-submit" onclick="submitOrder()" style="margin-top:8px;width:100%;justify-content:center;padding:15px 32px;font-size:1rem"><i class="fab fa-whatsapp"></i> &nbsp;Send Order via WhatsApp</button>
+        <div class="success-msg" id="successMsg">✅ Order sent! We'll confirm shortly via WhatsApp.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SERVICES ──────────────────────────────────────────── -->
+<section id="services">
+  <div class="container">
+    <div class="tag">Why Choose Us</div>
+    <h2 class="section-title">World-Class <span>Service</span></h2>
+    <p class="section-sub">More than just a store — we're your wrist's best friend, for life.</p>
+    <div class="services-grid">
+      <div class="service-card glass">
+        <div class="service-icon">🚚</div>
+        <h3>Fast Delivery</h3>
+        <p>Nationwide delivery within 2–5 business days. Free delivery on orders above Rs 5,000 across Pakistan.</p>
+      </div>
+      <div class="service-card glass">
+        <div class="service-icon">🛡️</div>
+        <h3>Warranty &amp; Repair</h3>
+        <p>All smartwatches come with a 2-year manufacturer warranty. Our certified technicians handle all repairs.</p>
+      </div>
+      <div class="service-card glass">
+        <div class="service-icon">✨</div>
+        <h3>Authentic Products</h3>
+        <p>Every item is sourced directly from official distributors. 100% genuine — no replicas, no compromises.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── REVIEWS ───────────────────────────────────────────── -->
+<section id="reviews">
+  <div class="container">
+    <div class="tag">Reviews</div>
+    <div class="reviews-header">
+      <div>
+        <h2 class="section-title">What Our <span>Customers Say</span></h2>
+        <p class="section-sub" style="margin-bottom:0">Real reviews from verified buyers across Pakistan.</p>
+      </div>
+      <div class="rating-big">
+        <div class="rating-number">4.9</div>
+        <div class="rating-info">
+          <div class="stars">★★★★★</div>
+          <p>Based on 2,400+ reviews</p>
+        </div>
+      </div>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card glass">
+        <div class="reviewer"><div class="reviewer-avatar">A</div><div><div class="reviewer-name">Ahmed R.</div><div class="reviewer-date">March 2025</div></div></div>
+        <div class="review-stars">★★★★★</div>
+        <p>"Got the Ultra Pro X9 and I am absolutely blown away. The display is stunning and the health features are accurate. Best purchase this year!"</p>
+      </div>
+      <div class="review-card glass">
+        <div class="reviewer"><div class="reviewer-avatar">S</div><div><div class="reviewer-name">Sara M.</div><div class="reviewer-date">February 2025</div></div></div>
+        <div class="review-stars">★★★★★</div>
+        <p>"Ordered the Aurora Gold Cuff for my sister's birthday. Arrived beautifully packaged. She was thrilled! Quality is superb."</p>
+      </div>
+      <div class="review-card glass">
+        <div class="reviewer"><div class="reviewer-avatar">U</div><div><div class="reviewer-name">Usman K.</div><div class="reviewer-date">January 2025</div></div></div>
+        <div class="review-stars">★★★★★</div>
+        <p>"Fast delivery to Lahore, genuine product with proper box and warranty card. The Meridian Gold Edition looks incredible on my wrist."</p>
+      </div>
+      <div class="review-card glass">
+        <div class="reviewer"><div class="reviewer-avatar">F</div><div><div class="reviewer-name">Fatima Z.</div><div class="reviewer-date">December 2024</div></div></div>
+        <div class="review-stars">★★★★★</div>
+        <p>"Bought the Couple Smart Set as an anniversary gift. The heart rate sync feature is so romantic! Highly recommend this store."</p>
+      </div>
+      <div class="review-card glass">
+        <div class="reviewer"><div class="reviewer-avatar">H</div><div><div class="reviewer-name">Hamza T.</div><div class="reviewer-date">November 2024</div></div></div>
+        <div class="review-stars">★★★★★</div>
+        <p>"ProFit Elite is worth every rupee. The ECG feature is incredibly accurate. TimeCraft's customer support was also very helpful."</p>
+      </div>
+      <div class="review-card glass">
+        <div class="reviewer"><div class="reviewer-avatar">N</div><div><div class="reviewer-name">Nadia A.</div><div class="reviewer-date">October 2024</div></div></div>
+        <div class="review-stars">★★★★★</div>
+        <p>"Got the KidTrack for my son — the GPS tracking gives me such peace of mind. Setup was simple and delivery was super fast. 10/10!"</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT ───────────────────────────────────────────── -->
+<section id="contact">
+  <div class="container">
+    <div class="tag">Get In Touch</div>
+    <h2 class="section-title">Visit Our <span>Store</span></h2>
+    <p class="section-sub">Come see our full collection in person or reach out online — we're always happy to help.</p>
+    <div class="contact-grid">
+      <div>
+        <div class="contact-info-item"><div class="contact-icon"><i class="fa fa-map-marker-alt"></i></div><div><h4>Store Location</h4><p>Main Market, Clock Tower Road, Kohat, KPK, Pakistan</p></div></div>
+        <div class="contact-info-item"><div class="contact-icon"><i class="fa fa-phone"></i></div><div><h4>Phone / WhatsApp</h4><a href="tel:+923349696888">+92 334 9696888</a></div></div>
+        <div class="contact-info-item"><div class="contact-icon"><i class="fab fa-instagram"></i></div><div><h4>Instagram</h4><a href="https://instagram.com" target="_blank">@timecraft.pk</a></div></div>
+        <div class="contact-info-item"><div class="contact-icon"><i class="fab fa-facebook"></i></div><div><h4>Facebook</h4><a href="https://facebook.com" target="_blank">facebook.com/TimeCraftPK</a></div></div>
+        <div class="contact-info-item"><div class="contact-icon"><i class="fa fa-clock"></i></div><div><h4>Store Hours</h4></div></div>
+        <div class="hours-grid">
+          <div class="hours-item"><span>Mon – Sat</span><span>10 AM – 9 PM</span></div>
+          <div class="hours-item"><span>Sunday</span><span>12 PM – 7 PM</span></div>
+          <div class="hours-item"><span>WhatsApp</span><span>24/7 Online</span></div>
+          <div class="hours-item" style="background:rgba(0,212,255,.06);border-color:rgba(0,212,255,.15)"><span>Status</span><span>Open 🟢</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="map-embed">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3308.8!2d71.4439!3d33.5865!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38df7000000001%3A0x1!2sKohat%2C%20Pakistan!5e0!3m2!1sen!2spk!4v1711700000000!5m2!1sen!2spk" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap">
+          <a href="tel:+923349696888" class="btn btn-accent"><i class="fa fa-phone"></i> Call Now</a>
+          <a href="https://wa.me/923349696888" target="_blank" class="btn btn-outline" style="border-color:#25D366;color:#25D366"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─────────────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo"><div class="logo-icon" style="width:30px;height:30px;font-size:.85rem"><i class="fa fa-clock"></i></div> TIME<span>CRAFT</span></div>
+        <p>Pakistan's premier smartwatch and bracelet store. Quality, authenticity and style — on every wrist.</p>
+        <div class="footer-social">
+          <a href="https://facebook.com" class="social-btn" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://instagram.com" class="social-btn" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/923349696888" class="social-btn" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="tel:+923349696888" class="social-btn"><i class="fa fa-phone"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#shop">Shop All</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Categories</h4>
+        <ul>
+          <li><a href="#shop">Smart Watches</a></li>
+          <li><a href="#shop">Analog Watches</a></li>
+          <li><a href="#shop">Gold Bracelets</a></li>
+          <li><a href="#shop">Pearl Bracelets</a></li>
+          <li><a href="#shop">Couple Sets</a></li>
+          <li><a href="#shop">Kids Watches</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="#">📍 Kohat, KPK, Pakistan</a></li>
+          <li><a href="tel:+923349696888">📞 +92 334 9696888</a></li>
+          <li><a href="https://instagram.com" target="_blank">📸 @timecraft.pk</a></li>
+          <li><a href="#">⏰ Mon–Sat 10AM–9PM</a></li>
+          <li><a href="#">⭐ 4.9 / 5 Rating</a></li>
+          <li><a href="#">🛡️ 2-Year Warranty</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 TimeCraft. All rights reserved. Kohat, Pakistan 🇵🇰</p>
+      <p style="color:var(--accent)">Crafted with ⌚ precision &amp; passion</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── CART OVERLAY & DRAWER ─────────────────────────────── -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-drawer glass" id="cartDrawer">
+  <div class="cart-head">
+    <h2>Your <span>Cart</span></h2>
+    <button class="cart-close" onclick="closeCart()"><i class="fa fa-times"></i></button>
+  </div>
+  <div class="cart-body" id="cartBody">
+    <div class="cart-empty" id="cartEmpty">
+      <i class="fa fa-shopping-bag"></i>
+      <p>Your cart is empty.<br>Add items from the shop!</p>
+    </div>
+  </div>
+  <div class="cart-foot" id="cartFoot" style="display:none">
+    <div class="cart-summary">
+      <div class="cart-row"><span>Subtotal</span><span id="cartSubtotal">Rs 0</span></div>
+      <div class="cart-row"><span>Delivery</span><span style="color:#4caf50">Free 🎉</span></div>
+      <div class="cart-row total"><span>Total</span><span id="cartTotal">Rs 0</span></div>
+    </div>
+    <button class="cart-checkout-btn" onclick="openCheckout()"><i class="fab fa-whatsapp"></i> Proceed to Checkout</button>
+    <button class="cart-clear-btn" onclick="clearCart()"><i class="fa fa-trash"></i> &nbsp;Clear Cart</button>
+  </div>
+</div>
+
+<!-- ─── CHECKOUT MODAL ────────────────────────────────────── -->
+<div class="checkout-modal" id="checkoutModal">
+  <div class="checkout-modal-bg" onclick="closeCheckout()"></div>
+  <div class="checkout-box glass">
+    <h2>Checkout <span>🛍️</span></h2>
+    <p>Review your order and fill in details to send via WhatsApp.</p>
+    <div class="checkout-order-summary" id="coSummary"></div>
+    <div class="co-total"><span>Total</span><span id="coTotal">Rs 0</span></div>
+    <div style="margin-top:20px">
+      <div class="form-group" style="margin-bottom:14px"><label>Your Name</label><input type="text" id="coName" placeholder="e.g. Ahmed Khan"></div>
+      <div class="form-group" style="margin-bottom:14px"><label>Phone Number</label><input type="tel" id="coPhone" placeholder="+92 300 0000000"></div>
+      <div class="form-group" style="margin-bottom:14px"><label>Delivery Address</label><input type="text" id="coAddress" placeholder="Full address with city"></div>
+      <div class="form-group" style="margin-bottom:14px"><label>Payment Method</label>
+        <select id="coPayment">
+          <option value="Cash on Delivery">💵 Cash on Delivery</option>
+          <option value="Bank Transfer">🏦 Bank Transfer</option>
+          <option value="EasyPaisa">📱 EasyPaisa</option>
+          <option value="JazzCash">📱 JazzCash</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Special Notes</label><input type="text" id="coNotes" placeholder="Colour preference, size, etc."></div>
+    </div>
+    <div class="checkout-actions">
+      <button class="btn btn-outline" onclick="closeCheckout()"><i class="fa fa-arrow-left"></i> Back</button>
+      <button class="btn btn-accent" onclick="sendWhatsAppOrder()"><i class="fab fa-whatsapp"></i> Send Order</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── FLOATING BUTTONS ───────────────────────────────────── -->
+<div class="floating-btns">
+  <button class="fab fab-cart" onclick="openCart()" title="View Cart">
+    <i class="fa fa-shopping-cart"></i>
+    <span class="cart-badge" id="cartBadge">0</span>
+  </button>
+  <a href="https://wa.me/923349696888?text=Hi%2C%20I%20want%20to%20order%20from%20TimeCraft%20store" target="_blank" class="fab fab-wa" title="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  <button class="fab fab-top" id="fabTop" onclick="scrollToTop()" title="Back to top">
+    <i class="fa fa-chevron-up"></i>
+  </button>
+</div>
+
+<script>
+// ══ CART STATE ══════════════════════════════════════════════
+let cart = [];
+
+// ── Navbar scroll ─────────────────────────────────────────
+const navbar = document.getElementById('navbar');
+const fabTop = document.getElementById('fabTop');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+  fabTop.classList.toggle('visible', window.scrollY > 400);
+});
+
+// ── Hamburger ─────────────────────────────────────────────
+const ham = document.getElementById('hamburger');
+const mob = document.getElementById('mobileMenu');
+ham.addEventListener('click', () => {
+  ham.classList.toggle('open');
+  mob.style.display = mob.style.display === 'block' ? 'none' : 'block';
+});
+function closeMenu() {
+  ham.classList.remove('open');
+  mob.style.display = 'none';
+}
+
+// ── Product filter ─────────────────────────────────────────
+const filterBtns = document.querySelectorAll('.filter-btn');
+const productCards = document.querySelectorAll('.product-card');
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat = btn.dataset.cat;
+    productCards.forEach((card, i) => {
+      const show = cat === 'all' || card.dataset.cat === cat;
+      card.classList.toggle('hidden', !show);
+      if (show) {
+        card.style.animationDelay = (i * 0.04) + 's';
+        card.style.animation = 'none';
+        void card.offsetWidth;
+        card.style.animation = '';
+      }
+    });
+  });
+});
+
+// ══ CART FUNCTIONS ══════════════════════════════════════════
+function addToCart(name, price, img, btn) {
+  const existing = cart.find(i => i.name === name);
+  if (existing) { existing.qty++; }
+  else { cart.push({ name, price, img, qty: 1 }); }
+  btn.classList.add('added');
+  btn.innerHTML = '<i class="fa fa-check"></i> Added!';
+  setTimeout(() => {
+    btn.classList.remove('added');
+    btn.innerHTML = '<i class="fa fa-plus"></i> Add';
+  }, 1400);
+  renderCart(); updateBadge();
+  const badge = document.getElementById('cartBadge');
+  badge.style.transform = 'scale(1.5)';
+  setTimeout(() => badge.style.transform = 'scale(1)', 250);
+}
+
+function changeQty(name, delta) {
+  const item = cart.find(i => i.name === name);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) cart = cart.filter(i => i.name !== name);
+  renderCart(); updateBadge();
+}
+
+function removeItem(name) {
+  cart = cart.filter(i => i.name !== name);
+  renderCart(); updateBadge();
+}
+
+function clearCart() {
+  cart = []; renderCart(); updateBadge();
+}
+
+function cartTotal() { return cart.reduce((s, i) => s + i.price * i.qty, 0); }
+function cartCount() { return cart.reduce((s, i) => s + i.qty, 0); }
+
+function updateBadge() {
+  const badge = document.getElementById('cartBadge');
+  const count = cartCount();
+  badge.textContent = count;
+  badge.classList.toggle('show', count > 0);
+}
+
+function renderCart() {
+  const body = document.getElementById('cartBody');
+  const foot = document.getElementById('cartFoot');
+  const empty = document.getElementById('cartEmpty');
+  if (cart.length === 0) {
+    body.querySelectorAll('.cart-item').forEach(el => el.remove());
+    empty.style.display = 'block';
+    foot.style.display = 'none';
+    return;
+  }
+  empty.style.display = 'none';
+  foot.style.display = 'block';
+  body.querySelectorAll('.cart-item').forEach(el => el.remove());
+  cart.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'cart-item';
+    div.innerHTML = `
+      <img class="cart-item-img" src="${item.img}" alt="${item.name}">
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-price">Rs ${(item.price * item.qty).toLocaleString()}</div>
+        <div class="cart-item-controls">
+          <button class="qty-btn" onclick="changeQty('${item.name.replace(/'/g,"\\'")}' ,-1)">−</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty('${item.name.replace(/'/g,"\\'")}',1)">+</button>
+        </div>
+      </div>
+      <button class="cart-item-del" onclick="removeItem('${item.name.replace(/'/g,"\\'")}')"><i class="fa fa-trash"></i></button>
+    `;
+    body.insertBefore(div, empty);
+  });
+  const total = cartTotal();
+  document.getElementById('cartSubtotal').textContent = 'Rs ' + total.toLocaleString();
+  document.getElementById('cartTotal').textContent = 'Rs ' + total.toLocaleString();
+}
+
+function openCart() {
+  document.getElementById('cartDrawer').classList.add('open');
+  document.getElementById('cartOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCart() {
+  document.getElementById('cartDrawer').classList.remove('open');
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function openCheckout() {
+  if (cart.length === 0) return;
+  const summary = document.getElementById('coSummary');
+  summary.innerHTML = '';
+  cart.forEach(item => {
+    const row = document.createElement('div');
+    row.className = 'co-item';
+    row.innerHTML = `<span>${item.qty}× ${item.name}</span><span>Rs ${(item.price * item.qty).toLocaleString()}</span>`;
+    summary.appendChild(row);
+  });
+  document.getElementById('coTotal').textContent = 'Rs ' + cartTotal().toLocaleString();
+  closeCart();
+  document.getElementById('checkoutModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCheckout() {
+  document.getElementById('checkoutModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function sendWhatsAppOrder() {
+  const name    = document.getElementById('coName').value.trim();
+  const phone   = document.getElementById('coPhone').value.trim();
+  const address = document.getElementById('coAddress').value.trim();
+  const payment = document.getElementById('coPayment').value;
+  const notes   = document.getElementById('coNotes').value.trim();
+  if (!name || !phone) { alert('Please enter your Name and Phone number.'); return; }
+  const orderLines = cart.map(i => `  • ${i.qty}× ${i.name} — Rs ${(i.price * i.qty).toLocaleString()}`).join('\n');
+  const msg = `⌚ *New Order – TimeCraft Store*\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n📍 Address: ${address || 'N/A'}\n💳 Payment: ${payment}\n\n🛒 *Order:*\n${orderLines}\n\n💰 *Total: Rs ${cartTotal().toLocaleString()}*\n` + (notes ? `📝 Notes: ${notes}` : '');
+  window.open(`https://wa.me/923349696888?text=${encodeURIComponent(msg)}`, '_blank');
+  closeCheckout();
+  cart = []; renderCart(); updateBadge();
+}
+
+// ── Direct order form ──────────────────────────────────────
+function submitOrder() {
+  const name    = document.getElementById('fname').value.trim();
+  const phone   = document.getElementById('fphone').value.trim();
+  const city    = document.getElementById('fcity').value.trim();
+  const address = document.getElementById('faddress').value.trim();
+  const details = document.getElementById('fdetails').value.trim();
+  const payment = document.getElementById('fpayment').value;
+  const notes   = document.getElementById('fnotes').value.trim();
+  if (!name || !phone || !details) { alert('Please fill in Name, Phone and Product details.'); return; }
+  const msg = `⌚ *New Order – TimeCraft Store*\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n🏙️ City: ${city || 'N/A'}\n📍 Address: ${address || 'N/A'}\n💳 Payment: ${payment}\n\n🛒 *Products:*\n${details}\n` + (notes ? `\n📝 Notes: ${notes}` : '');
+  window.open(`https://wa.me/923349696888?text=${encodeURIComponent(msg)}`, '_blank');
+  document.getElementById('successMsg').style.display = 'block';
+  setTimeout(() => document.getElementById('successMsg').style.display = 'none', 6000);
+}
+
+// ── Back to top ────────────────────────────────────────────
+function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+// ── Intersection observer ──────────────────────────────────
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.style.opacity = '1'; });
+}, { threshold: 0.1 });
+document.querySelectorAll('.product-card,.review-card,.service-card').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transition = 'opacity .5s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
