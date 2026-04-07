@@ -1124,7 +1124,7 @@ function submitOrder() {
   const notes   = document.getElementById('fnotes').value.trim();
   if (!name || !phone || !details) { alert('Please fill in Name, Phone and Product details.'); return; }
   const msg = `⌚ *New Order – TimeCraft Store*\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n🏙️ City: ${city || 'N/A'}\n📍 Address: ${address || 'N/A'}\n💳 Payment: ${payment}\n\n🛒 *Products:*\n${details}\n` + (notes ? `\n📝 Notes: ${notes}` : '');
-  window.open(`https://wa.me/923349696888?text=${encodeURIComponent(msg)}`, '_blank');
+  window.open(`https://wa.me/923372626303?text=${encodeURIComponent(msg)}`, '_blank');
   document.getElementById('successMsg').style.display = 'block';
   setTimeout(() => document.getElementById('successMsg').style.display = 'none', 6000);
 }
