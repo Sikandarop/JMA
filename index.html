@@ -317,29 +317,67 @@ footer{background:#030509;padding:54px 24px 24px;border-top:1px solid rgba(0,212
 @media(max-width:1024px){
   .hero-inner{grid-template-columns:1fr;text-align:center}
   .hero-visual{display:none}
-  .hero-stats{justify-content:center}
+  .hero-stats{justify-content:center;gap:24px;flex-wrap:wrap}
   .hero-btns{justify-content:center}
   .footer-grid{grid-template-columns:1fr 1fr}
   .gallery-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:auto}
   .gallery-item:nth-child(1),.gallery-item:nth-child(4){grid-column:span 1}
+  .about-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
 }
 @media(max-width:768px){
-  section{padding:64px 20px}
+  section{padding:56px 16px}
+  .container{padding:0 16px}
   .nav-links{display:none}
   .hamburger{display:flex}
+  .logo{font-size:1.2rem}
+  .section-title{font-size:clamp(1.5rem,6vw,2.2rem)}
+  .section-sub{font-size:.88rem;margin-bottom:36px}
   .about-grid,.contact-grid{grid-template-columns:1fr}
-  .services-grid{grid-template-columns:1fr}
+  .about-img img{height:280px}
+  .services-grid{grid-template-columns:1fr;gap:16px}
+  .service-card{padding:28px 20px}
   .form-grid{grid-template-columns:1fr}
-  .footer-grid{grid-template-columns:1fr}
-  .footer-bottom{flex-direction:column;text-align:center}
+  .footer-grid{grid-template-columns:1fr;gap:28px}
+  .footer-bottom{flex-direction:column;text-align:center;gap:8px}
   .features-strip-inner{flex-direction:column;gap:0}
-  .strip-feat{border-right:none;border-bottom:1px solid rgba(255,255,255,.05)}
+  .strip-feat{border-right:none;border-bottom:1px solid rgba(255,255,255,.05);padding:14px 20px}
+  .products-grid{grid-template-columns:repeat(2,1fr);gap:14px}
+  .product-img{height:160px}
+  .product-body{padding:14px}
+  .product-body h3{font-size:.95rem}
+  .product-body p{font-size:.75rem}
+  .price{font-size:1.1rem}
+  .add-btn{padding:7px 12px;font-size:.75rem}
+  .reviews-grid{grid-template-columns:1fr;gap:14px}
+  .reviews-header{flex-direction:column;align-items:flex-start;gap:16px}
+  .rating-number{font-size:3.5rem}
+  .gallery-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .gallery-item{height:140px}
+  .hours-grid{grid-template-columns:1fr}
+  .hero-stats{gap:16px}
+  .stat-num{font-size:1.4rem}
+  .hero-title{font-size:clamp(2rem,8vw,3rem)}
+  .hero-sub{font-size:.9rem}
+  .btn{padding:11px 22px;font-size:.85rem}
+  .cart-drawer{width:100vw}
+  .checkout-box{padding:24px 20px}
+  .shop-filter{gap:8px}
+  .filter-btn{padding:7px 14px;font-size:.72rem}
+  .brands-inner{gap:28px}
+  .brand-logo{font-size:.85rem}
+  .map-embed{height:200px}
+  .floating-btns{bottom:20px;right:16px;gap:10px}
+  .fab{width:48px;height:48px;font-size:1.1rem}
 }
-@media(max-width:480px){
+@media(max-width:400px){
+  .products-grid{grid-template-columns:1fr}
   .gallery-grid{grid-template-columns:1fr}
   .gallery-item:nth-child(1),.gallery-item:nth-child(4){grid-column:span 1}
-  .products-grid{grid-template-columns:1fr}
-  .reviews-header{flex-direction:column;align-items:flex-start}
+  .hero-btns{flex-direction:column;align-items:center}
+  .hero-stats{justify-content:space-around;width:100%}
+  nav{padding:0 14px}
+  .checkout-actions{flex-direction:column}
 }
 </style>
 </head>
@@ -444,7 +482,7 @@ footer{background:#030509;padding:54px 24px 24px;border-top:1px solid rgba(0,212
       <button class="filter-btn" data-cat="analog">Analog Watches</button>
       <button class="filter-btn" data-cat="bracelet">Bracelets</button>
       <button class="filter-btn" data-cat="couple">Couple Sets</button>
-      <button class="filter-btn" data-cat="kids">Kids Watches</button>
+      <button class="filter-btn" data-cat="rings">Rings</button>
     </div>
     <div class="products-grid" id="menuGrid">
 
@@ -596,23 +634,41 @@ footer{background:#030509;padding:54px 24px 24px;border-top:1px solid rgba(0,212
           <div class="product-foot"><div><span class="price">Rs 9,800</span><span class="price-old">Rs 15,000</span></div><button class="add-btn" onclick="addToCart('His & Hers Watch Set',9800,'https://images.unsplash.com/photo-1519995451813-39e29e054914?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
       </div>
 
-      <!-- ══ KIDS WATCHES ══ -->
-      <div class="product-card glass" data-cat="kids">
-        <div class="product-img"><img src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600&q=80" alt="KidTrack" loading="lazy"><div class="product-badge">🧒 Kids GPS</div></div>
-        <div class="product-body"><div class="product-brand">KidTrack</div><h3>KidTrack GPS Watch</h3><p>Real-time GPS tracking, SOS button, two-way calling, IP67 waterproof, parent app.</p>
-          <div class="product-foot"><div><span class="price">Rs 5,800</span><span class="price-old">Rs 8,000</span></div><button class="add-btn" onclick="addToCart('KidTrack GPS Watch',5800,'https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      <!-- ══ RINGS ══ -->
+      <div class="product-card glass" data-cat="rings">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600&q=80" alt="Diamond Solitaire Ring" loading="lazy"><div class="product-badge gold">💎 Diamond</div></div>
+        <div class="product-body"><div class="product-brand">Celestia</div><h3>Diamond Solitaire Ring</h3><p>CZ diamond centre stone, 18K gold-plated band, prong setting, gift box included.</p>
+          <div class="product-foot"><div><span class="price">Rs 3,800</span><span class="price-old">Rs 5,500</span></div><button class="add-btn" onclick="addToCart('Diamond Solitaire Ring',3800,'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
       </div>
 
-      <div class="product-card glass" data-cat="kids">
-        <div class="product-img"><img src="https://images.unsplash.com/photo-1587502536575-6dfba0a6e017?w=600&q=80" alt="DinoWatch Kids" loading="lazy"><div class="product-badge red">🦕 Fun</div></div>
-        <div class="product-body"><div class="product-brand">DinoWatch</div><h3>DinoWatch Fun Edition</h3><p>Colourful dino design, time teacher, alarm, stopwatch, soft silicone strap.</p>
-          <div class="product-foot"><div><span class="price">Rs 1,800</span><span class="price-old">Rs 2,500</span></div><button class="add-btn" onclick="addToCart('DinoWatch Fun Edition',1800,'https://images.unsplash.com/photo-1587502536575-6dfba0a6e017?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      <div class="product-card glass" data-cat="rings">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&q=80" alt="Rose Gold Stack Ring" loading="lazy"><div class="product-badge">🌸 Rose Gold</div></div>
+        <div class="product-body"><div class="product-brand">Aurora</div><h3>Rose Gold Stack Ring Set</h3><p>Set of 3 stackable rings, rose gold-plated, minimalist design, adjustable band.</p>
+          <div class="product-foot"><div><span class="price">Rs 1,600</span><span class="price-old">Rs 2,400</span></div><button class="add-btn" onclick="addToCart('Rose Gold Stack Ring Set',1600,'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
       </div>
 
-      <div class="product-card glass" data-cat="kids">
-        <div class="product-img"><img src="https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=600&q=80" alt="StarKid Smart" loading="lazy"><div class="product-badge">⭐ Smart</div></div>
-        <div class="product-body"><div class="product-brand">StarKid</div><h3>StarKid Smart Watch</h3><p>Games, camera, pedometer, alarm, educational apps, 3-day battery, cute design.</p>
-          <div class="product-foot"><div><span class="price">Rs 3,400</span><span class="price-old">Rs 5,000</span></div><button class="add-btn" onclick="addToCart('StarKid Smart Watch',3400,'https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      <div class="product-card glass" data-cat="rings">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1551408531-a8bd2d5c4e77?w=600&q=80" alt="Couple Promise Ring" loading="lazy"><div class="product-badge red">❤️ Couple</div></div>
+        <div class="product-body"><div class="product-brand">Infinity</div><h3>Couple Promise Ring Set</h3><p>Matching his &amp; hers rings, stainless steel, engraved infinity symbol, gift box.</p>
+          <div class="product-foot"><div><span class="price">Rs 2,200</span><span class="price-old">Rs 3,500</span></div><button class="add-btn" onclick="addToCart('Couple Promise Ring Set',2200,'https://images.unsplash.com/photo-1551408531-a8bd2d5c4e77?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="rings">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1573408301185-9519f94815e2?w=600&q=80" alt="Sapphire Ring" loading="lazy"><div class="product-badge gold">💙 Sapphire</div></div>
+        <div class="product-body"><div class="product-brand">Lumière</div><h3>Sapphire Blue Ring</h3><p>Lab-created sapphire stone, silver band, art deco design, comes in luxury pouch.</p>
+          <div class="product-foot"><div><span class="price">Rs 2,900</span><span class="price-old">Rs 4,200</span></div><button class="add-btn" onclick="addToCart('Sapphire Blue Ring',2900,'https://images.unsplash.com/photo-1573408301185-9519f94815e2?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="rings">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1531995811006-35cb42e1a022?w=600&q=80" alt="Gold Band Ring" loading="lazy"><div class="product-badge gold">✨ Classic</div></div>
+        <div class="product-body"><div class="product-brand">Luxe</div><h3>Classic Gold Band Ring</h3><p>Plain polished gold band, 18K gold-plated, available in multiple sizes, unisex.</p>
+          <div class="product-foot"><div><span class="price">Rs 1,200</span><span class="price-old">Rs 1,800</span></div><button class="add-btn" onclick="addToCart('Classic Gold Band Ring',1200,'https://images.unsplash.com/photo-1531995811006-35cb42e1a022?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
+      </div>
+
+      <div class="product-card glass" data-cat="rings">
+        <div class="product-img"><img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&q=80" alt="Emerald Ring" loading="lazy"><div class="product-badge">💚 Emerald</div></div>
+        <div class="product-body"><div class="product-brand">Zenith</div><h3>Emerald Statement Ring</h3><p>Bold emerald-cut green stone, gold-plated cocktail ring, statement jewellery piece.</p>
+          <div class="product-foot"><div><span class="price">Rs 3,400</span><span class="price-old">Rs 5,000</span></div><button class="add-btn" onclick="addToCart('Emerald Statement Ring',3400,'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=120&q=70',this)"><i class="fa fa-plus"></i> Add</button></div></div>
       </div>
 
     </div>
@@ -797,24 +853,17 @@ footer{background:#030509;padding:54px 24px 24px;border-top:1px solid rgba(0,212
     <div class="contact-grid">
       <div>
         <div class="contact-info-item"><div class="contact-icon"><i class="fa fa-map-marker-alt"></i></div><div><h4>Store Location</h4><p>Main Market, Clock Tower Road, Kohat, KPK, Pakistan</p></div></div>
-        <div class="contact-info-item"><div class="contact-icon"><i class="fa fa-phone"></i></div><div><h4>Phone / WhatsApp</h4><a href="tel:+923349696888">+92 334 9696888</a></div></div>
+        <div class="contact-info-item"><div class="contact-icon"><i class="fa fa-phone"></i></div><div><h4>Phone / WhatsApp</h4><a href="tel:+923372626303">+92 337 2626303</a></div></div>
         <div class="contact-info-item"><div class="contact-icon"><i class="fab fa-instagram"></i></div><div><h4>Instagram</h4><a href="https://instagram.com" target="_blank">@timecraft.pk</a></div></div>
         <div class="contact-info-item"><div class="contact-icon"><i class="fab fa-facebook"></i></div><div><h4>Facebook</h4><a href="https://facebook.com" target="_blank">facebook.com/TimeCraftPK</a></div></div>
-        <div class="contact-info-item"><div class="contact-icon"><i class="fa fa-clock"></i></div><div><h4>Store Hours</h4></div></div>
-        <div class="hours-grid">
-          <div class="hours-item"><span>Mon – Sat</span><span>10 AM – 9 PM</span></div>
-          <div class="hours-item"><span>Sunday</span><span>12 PM – 7 PM</span></div>
-          <div class="hours-item"><span>WhatsApp</span><span>24/7 Online</span></div>
-          <div class="hours-item" style="background:rgba(0,212,255,.06);border-color:rgba(0,212,255,.15)"><span>Status</span><span>Open 🟢</span></div>
-        </div>
       </div>
       <div>
         <div class="map-embed">
           <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3308.8!2d71.4439!3d33.5865!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38df7000000001%3A0x1!2sKohat%2C%20Pakistan!5e0!3m2!1sen!2spk!4v1711700000000!5m2!1sen!2spk" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
         <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap">
-          <a href="tel:+923349696888" class="btn btn-accent"><i class="fa fa-phone"></i> Call Now</a>
-          <a href="https://wa.me/923349696888" target="_blank" class="btn btn-outline" style="border-color:#25D366;color:#25D366"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+          <a href="tel:+923372626303" class="btn btn-accent"><i class="fa fa-phone"></i> Call Now</a>
+          <a href="https://wa.me/923372626303" target="_blank" class="btn btn-outline" style="border-color:#25D366;color:#25D366"><i class="fab fa-whatsapp"></i> WhatsApp</a>
         </div>
       </div>
     </div>
@@ -831,8 +880,8 @@ footer{background:#030509;padding:54px 24px 24px;border-top:1px solid rgba(0,212
         <div class="footer-social">
           <a href="https://facebook.com" class="social-btn" target="_blank"><i class="fab fa-facebook-f"></i></a>
           <a href="https://instagram.com" class="social-btn" target="_blank"><i class="fab fa-instagram"></i></a>
-          <a href="https://wa.me/923349696888" class="social-btn" target="_blank"><i class="fab fa-whatsapp"></i></a>
-          <a href="tel:+923349696888" class="social-btn"><i class="fa fa-phone"></i></a>
+          <a href="https://wa.me/923372626303" class="social-btn" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="tel:+923372626303" class="social-btn"><i class="fa fa-phone"></i></a>
         </div>
       </div>
       <div class="footer-col">
@@ -854,14 +903,14 @@ footer{background:#030509;padding:54px 24px 24px;border-top:1px solid rgba(0,212
           <li><a href="#shop">Gold Bracelets</a></li>
           <li><a href="#shop">Pearl Bracelets</a></li>
           <li><a href="#shop">Couple Sets</a></li>
-          <li><a href="#shop">Kids Watches</a></li>
+          <li><a href="#shop">Rings</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
         <ul>
           <li><a href="#">📍 Kohat, KPK, Pakistan</a></li>
-          <li><a href="tel:+923349696888">📞 +92 334 9696888</a></li>
+          <li><a href="tel:+923372626303">📞 +92 337 2626303</a></li>
           <li><a href="https://instagram.com" target="_blank">📸 @timecraft.pk</a></li>
           <li><a href="#">⏰ Mon–Sat 10AM–9PM</a></li>
           <li><a href="#">⭐ 4.9 / 5 Rating</a></li>
@@ -935,7 +984,7 @@ footer{background:#030509;padding:54px 24px 24px;border-top:1px solid rgba(0,212
     <i class="fa fa-shopping-cart"></i>
     <span class="cart-badge" id="cartBadge">0</span>
   </button>
-  <a href="https://wa.me/923349696888?text=Hi%2C%20I%20want%20to%20order%20from%20TimeCraft%20store" target="_blank" class="fab fab-wa" title="WhatsApp">
+  <a href="https://wa.me/923372626303?text=Hi%2C%20I%20want%20to%20order%20from%20TimeCraft%20store" target="_blank" class="fab fab-wa" title="WhatsApp">
     <i class="fab fa-whatsapp"></i>
   </a>
   <button class="fab fab-top" id="fabTop" onclick="scrollToTop()" title="Back to top">
